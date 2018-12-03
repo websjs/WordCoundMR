@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+<!--
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License. See accompanying LICENSE file.
+-->
+
+<!-- Put site-specific property overrides in this file. -->
+<configuration>
+  <property>
+    <!-- Default block replication. The actual number of replications can be specified when the file is created. The default is used
+          if replication is not specified in create time. Default value: 3 -->
+    <name>dfs.replication</name>
+    <value>3</value>
+  </property>
+  <property>
+    <!-- Determines where on the local filesystem the DFS name node should store the name table(fsimage). If this is a comma-delimited list of directories then the name table is replicated in all of the directories, for redundancy. Defualt value: file://${hadoop.tmp.dir}/dfs/name -->
+    <name>dfs.namenode.name.dir</name>
+    <value>/opt/hadoop-2.7.3/data/namenode</value>
+  </property>
+  <property>
+    <!-- Determines where on the local filesystem an DFS data node should store its blocks. If this is a comma-delimited list of directories, then data will be stored in all named directories, typically on different devices. Default value: file://${hadoop.tmp.dir}/dfs/data -->
+    <name>dfs.datanode.data.dir</name>
+    <value>/opt/hadoop-2.7.3/data/datanode</value>
+  </property>
+  <property>
+    <!-- the path where the JournalNode daemon will store its local state. -->
+    <name>dfs.journalnode.edits.dir</name>
+    <value>/opt/hadoop-2.7.3/data/jn</value>
+  </property>
+  <property>
+    <!-- If "true", enable permission checking in HDFS. If "false", permission checking is turned off, but all other behavior is unchanged. Default value: true -->
+    <name>dfs.permissions.enabled</name>
+    <value>false</value>
+  </property>
+    <property>
+    <!-- Comma-separated list of nameservices -->
+    <name>dfs.nameservices</name>
+    <value>ha-cluster</value>
+  </property>
+  <property>
+    <!-- The prefix for a given nameservice, contains a comma-separated list of namenodes for a given nameservice (eg EXAMPLENAMESERVICE). -->
+    <name>dfs.ha.namenodes.ha-cluster</name>
+    <value>nn1,nn2</value>
+  </property>
+  <property>
+    <!-- RPC address that handles all clients requests. In the case of HA/Federation where multiple namenodes exist, the name service id is added to the name e.g. dfs.namenode.rpc-address.ns1 dfs.namenode.rpc-address.EXAMPLENAMESERVICE The value of this property w
+         ill take the form of nn-host1:rpc-port. -->
+    <name>dfs.namenode.rpc-address.ha-cluster.nn1</name>
+    <value>hadoop01:9000</value>
+  </property>
+  <property>
+    <name>dfs.namenode.rpc-address.ha-cluster.nn2</name>
+    <value>hadoop02:9000</value>
+  </property>
+  <property>
+    <!-- The address and the base port where the dfs namenode web ui will listen on. -->
+    <name>dfs.namenode.http-address.ha-cluster.nn1</name>
+    <value>hadoop01:50070</value>
+  </property>
+  <property>
+    <name>dfs.namenode.http-address.ha-cluster.nn2</name>
+    <value>hadoop02:50070</value>
+  </property>
+  <property>
+    <!-- A directory on shared storage between the multiple namenodes in an HA cluster. This directory will be written by the active
+          and read by the standby in order to keep the namespaces synchronized. This directory does not need to be listed in dfs.namenode.edits.dir above. It should be left empty in a non-HA cluster. -->
+    <name>dfs.namenode.shared.edits.dir</name>
+    <value>qjournal://hadoop01:8485;hadoop02:8485;hadoop03:8485/ha-cluster</value>
+  </property>
+  <property>
+    <!-- the Java class that HDFS clients use to contact the Active NameNode -->
+    <name>dfs.client.failover.proxy.provider.ha-cluster</name>
+    <value>org.apache.hadoop.hdfs.server.namenode.ha.ConfiguredFailoverProxyProvider</value>
+  </property>
+  <property>
+    <!-- Whether automatic failover is enabled. Default value: false -->
+    <name>dfs.ha.automatic-failover.enabled</name>
+    <value>true</value>
+  </property>
+  <property>
+    <!-- a list of scripts or Java classes which will be used to fence the Active NameNode during a failover. -->
+    <name>dfs.ha.fencing.methods</name>
+    <value>
+      sshfence
+    </value>
+  </property>
+  <property>
+    <!-- a comma-separated list of SSH private key files -->
+    <name>dfs.ha.fencing.ssh.private-key-files</name>
+    <value>/root/.ssh/id_rsa</value>
+  </property>
+</configuration>

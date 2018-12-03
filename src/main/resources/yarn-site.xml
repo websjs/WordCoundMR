@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<!--
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License. See accompanying LICENSE file.
+-->
+<configuration>
+  <property>
+    <!-- Enable RM high-availability -->
+    <name>yarn.resourcemanager.ha.enabled</name>
+    <value>true</value>
+  </property>
+  <property>
+    <!-- Name of the cluster. In a HA setting, this is used to ensure the RM participates in leader election for this cluster and ensures it does not affect other clusters -->
+    <name>yarn.resourcemanager.cluster-id</name>
+    <value>yrc</value>
+  </property>
+  <property>
+    <!-- The list of RM nodes in the cluster when HA is enabled -->
+    <name>yarn.resourcemanager.ha.rm-ids</name>
+    <value>rm1,rm2</value>
+  </property>
+  <property>
+    <!-- The hostname of the RM. Default value：0.0.0.0 -->
+    <name>yarn.resourcemanager.hostname.rm1</name>
+    <value>hadoop02</value>
+  </property>
+  <property>
+    <name>yarn.resourcemanager.hostname.rm2</name>
+    <value>hadoop03</value>
+  </property>
+  <property>
+    <!-- Host:Port of the ZooKeeper server to be used by the RM. This must be supplied when using the ZooKeeper based implementation
+          of the RM state store and/or embedded automatic failover in a HA setting. -->
+    <name>yarn.resourcemanager.zk-address</name>
+    <value>hadoop01:2181,hadoop02:2181,hadoop03:2181</value>
+  </property>
+<property>
+    <!-- A comma separated list of services where service name should only contain a-zA-Z0-9_ and can not start with numbers -->
+    <name>yarn.nodemanager.aux-services</name>
+    <value>mapreduce_shuffle</value>
+  </property>
+</configuration>
